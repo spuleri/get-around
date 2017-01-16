@@ -1,0 +1,8 @@
+.translation-input {
+  margin: 20px;
+  text-align: center;
+}
+
+.translation-input input {
+  width: 75%;
+}
