@@ -23,8 +23,15 @@ app.use(webpackDevMiddleware(compiler, {
   log: console.log
 }));
 
+// Start listening
 const server = app.listen(8000, () => {
   const host = server.address().address;
   const port = server.address().port;
   console.log('App listening at http://%s:%s', host, port);
+});
+
+// Sample route
+app.get('/data', (req, res) => {
+  console.log('Receievd Request at /data');
+  res.send('Hello World!');
 });
