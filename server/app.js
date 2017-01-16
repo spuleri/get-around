@@ -25,9 +25,8 @@ app.use(webpackDevMiddleware(compiler, {
 
 // Start listening
 const server = app.listen(8000, () => {
-  const host = server.address().address;
   const port = server.address().port;
-  console.log('App listening at http://%s:%s', host, port);
+  console.log('App listening on port %s!', port);
 });
 
 // Sample route

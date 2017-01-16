@@ -7,6 +7,7 @@ import TranslationInput from './components/translation_input';
 const App = () => {
   return (
     <div>
+      <h1 className="has-text-centered title is-1">Hello World!</h1>
       <TranslationInput />
     </div>
   );

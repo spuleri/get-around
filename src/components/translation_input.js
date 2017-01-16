@@ -7,7 +7,12 @@ class TranslationInput extends Component {
     return (
       // React.createElement
       <div className="translation-input">
-        <input onChange={event => console.log(event.target.value)} />
+        <input
+          className="input"
+          type="text"
+          placeholder="Enter Text here"
+          onChange={event => console.log(event.target.value)}
+        />
       </div>
     );
   }

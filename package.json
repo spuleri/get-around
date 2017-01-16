@@ -18,13 +18,14 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "webpack": "^1.13.1",
-    "webpack-dev-middleware": "^1.6.1",
-    "express": "^4.13.4",
     "babel-preset-stage-1": "^6.1.18",
+    "bulma": "^0.3.1",
+    "express": "^4.13.4",
     "lodash": "^3.10.1",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1"
   },
   "keywords": [],
   "author": "",
