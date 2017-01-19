@@ -1,17 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import TranslationInput from './components/translation_input';
+import StartButton from './components/start_button';
+import InteractionView from './components/interaction_view';
+import CenterContainer from './components/center_container';
 
 // Create component to produce some HTML
 
-const App = () => {
-  return (
-    <div>
-      <h1 className="has-text-centered title is-1">Hello World!</h1>
-      <TranslationInput />
-    </div>
-  );
-};
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { startInteraction: false };
+  }
+
+
+  switchViews() {
+    console.log('Tapped button, state is:' + this.state.startInteraction);
+    this.setState({ startInteraction: !this.state.startInteraction });
+  }
+
+  renderView() {
+    console.log('in renderView');
+    if (!this.state.startInteraction) {
+      return (
+        <CenterContainer>
+            <StartButton onTap={this.switchViews.bind(this)} />
+        </CenterContainer>
+      );
+    } else {
+        return (
+          <CenterContainer>
+            <InteractionView />
+          </CenterContainer>
+        );
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <h1 className="has-text-centered title is-1">GetAround</h1>
+        {this.renderView()}
+
+      </div>
+    );
+  }
+}
 
 // Take this component's HTML and put it on the DOM
 // Second paramter, is the target PARENT CONTAINER COMPONENT!!!

@@ -1,8 +1,107 @@
+/* https://philipwalton.github.io/solved-by-flexbox/demos/vertical-centering/*/
+
 .translation-input {
   margin: 20px;
   text-align: center;
 }
 
-/*.translation-input input {
-  width: 75%;
-}*/
+.start-button {
+  width: 35vw;
+  height: 35vw;
+  border-radius: 50%;
+}
+
+.start-icon {
+  font-size: 20rem;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.chat-box {
+  border: 2px solid #b5b5b5;
+  border-radius: 1%;
+  height: 60vh;
+  width: 50vw;
+  /* To allow scrolling */
+  overflow: auto;
+}
+
+.chat-area {
+  /*border: 1px solid #b5b5b5;*/
+  /*border-radius: 1%;*/
+  height: 10vh;
+  width: 50vw;
+}
+.chat-text-area {
+  font-size: 1.5rem;
+  max-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  max-height:100%;
+}
+
+.chat-bubble {
+  background-color: #f8f8f8;
+   border: 1px solid #313131;
+   border-radius: 4em;
+   max-width: 60%;
+   padding: 3%;
+   margin-bottom: 3%;
+}
+
+.chat-bubble-bottom-space {
+  clear: both;
+}
+
+.chat-text {
+  font-size: 3.5rem;
+}
+
+.left-bubble {
+  border-top-left-radius: 0;
+  text-align: left;
+  float: left;
+  margin-left: 0.5vw;
+}
+
+.right-bubble {
+  border-top-right-radius: 0;
+  text-align: right;
+  float: right;
+  margin-right: 0.5vw;
+}
+
+
+.interaction-view-button {
+  float: right;
+  width: 4vw;
+  height: 4vw;
+  border-radius: 50%;
+}
+
+.interaction-view-icon {
+  font-size: 5rem;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Styles */
+  .start-button {
+    width: 80vw;
+    height: 80vw;
+    border-radius: 50%;
+  }
+
+  .chat-box {
+    width: 90vw;
+  }
+
+}
