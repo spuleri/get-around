@@ -8,6 +8,10 @@ import Translator from './translator';
 
 const app = express();
 
+const port = (process.env.PORT || 8000);
+app.set('port', port);
+
+
 const compiler = webpack(webpackConfig);
 
 // Go up a directory to get static files (index.html)
@@ -29,7 +33,7 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 // Start listening
-const server = app.listen(8000, () => {
+const server = app.listen(port, () => {
   const port = server.address().port;
   console.log('App listening on port %s!', port);
 });
