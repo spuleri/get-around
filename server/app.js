@@ -3,8 +3,13 @@ import express from 'express';
 import webpack from 'webpack';
 import bodyParser from 'body-parser';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackConfig from '../webpack.config';
+import webpackDevConfig from '../webpack.dev.config';
+import webpackProdConfig from '../webpack.prod.config';
 import Translator from './translator';
+
+// Get the current environment
+const env = process.env.NODE_ENV || 'dev';
+console.log(`CURRENTLY RUNNING IN ${env}`);
 
 const app = express();
 
@@ -12,7 +17,11 @@ const port = (process.env.PORT || 8000);
 app.set('port', port);
 
 
-const compiler = webpack(webpackConfig);
+// Setup webpack config (Dev by default)
+let compiler = webpack(webpackDevConfig);
+if (env === 'production') {
+  compiler = webpack(webpackProdConfig);
+}
 
 // Go up a directory to get static files (index.html)
 app.use(express.static(path.join(__dirname, '/../')));
@@ -34,7 +43,6 @@ app.use(webpackDevMiddleware(compiler, {
 
 // Start listening
 const server = app.listen(port, () => {
-  const port = server.address().port;
   console.log('App listening on port %s!', port);
 });
 
