@@ -1,4 +1,9 @@
 # Project Specific ESLint Setup
 {
-  "extends": "rallycoding"
+  "extends": "rallycoding",
+  "globals": {
+    "document": true,
+    "foo": true,
+    "window": true
+  }
 }

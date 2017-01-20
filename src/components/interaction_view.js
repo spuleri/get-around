@@ -74,7 +74,8 @@ class InteractionView extends Component {
   }
 
   completeInteraction() {
-    console.log('Finishing up interaction!!!');
+    console.log('Finishing up interaction');
+    window.open('https://ufl.qualtrics.com/jfe/form/SV_4U6sDjyBjVkA0lL', '_blank');
   }
 
   pickLanguage(language) {
