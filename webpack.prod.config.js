@@ -17,7 +17,7 @@ module.exports = {
       }
     },
     {
-      test: /server\.js$/,
+      test: /\.js$/,
       loader: 'webpack-replace',
       query: {
         search: 'http://localhost:8000/',
