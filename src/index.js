@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
 import StartButton from './components/start_button';
 import InteractionView from './components/interaction_view';
 import CenterContainer from './components/center_container';
@@ -15,7 +15,6 @@ class App extends Component {
 
 
   switchViews() {
-    console.log('Tapped button, state is:' + this.state.startInteraction);
     this.setState({ startInteraction: !this.state.startInteraction });
   }
 
@@ -27,13 +26,13 @@ class App extends Component {
             <StartButton onTap={this.switchViews.bind(this)} />
         </CenterContainer>
       );
-    } else {
-        return (
-          <CenterContainer>
-            <InteractionView />
-          </CenterContainer>
-        );
     }
+    // Otherwise, we're at the main interaction view.
+    return (
+      <CenterContainer>
+        <InteractionView />
+      </CenterContainer>
+    );
   }
 
   render() {

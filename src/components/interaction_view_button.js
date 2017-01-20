@@ -1,9 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
 
-
-// class StartButton extends Component {
-
 const InteractionViewButton = ({ onTap, color, icon }) => {
   // ^ Destructuring onTap prop function attribute from props object.
 

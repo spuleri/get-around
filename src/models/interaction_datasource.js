@@ -1,9 +1,9 @@
 class InteractionDataSource {
 
-  primaryUserLanguage = 'english';
-  secondaryUserLanguage = 'english';
-  sentMessages = { primaryUserPOV: [], secondaryUserPOV: [] };
-  receivedMessages = { primaryUserPOV: [], secondaryUserPOV: [] };
+  primaryUserLanguage = 'English';
+  secondaryUserLanguage = 'English';
+  primaryUsersMessages = [];
+  secondaryUsersMessages = [];
 
   setPrimaryUserLanguage(language) {
     this.primaryUserLanguage = language;
@@ -12,7 +12,15 @@ class InteractionDataSource {
     this.secondaryUserLanguage = language;
   }
 
+  primaryUserDidSendMessage(original, translation) {
+    this.primaryUsersMessages.push({ text: original, isSentFromPrimary: true });
+    this.secondaryUsersMessages.push({ text: translation, isSentFromPrimary: true });
+  }
 
+  secondaryUserDidSendMessage(original, translation) {
+    this.secondaryUsersMessages.push({ text: original, isSentFromPrimary: false });
+    this.primaryUsersMessages.push({ text: translation, isSentFromPrimary: false });
+  }
 }
 
 export default InteractionDataSource;

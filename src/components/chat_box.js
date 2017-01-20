@@ -3,23 +3,27 @@ import ChatBubble from './chat_bubble';
 
 class ChatBox extends Component {
 
-  state = {
-    chats: [
-      { text: 'hey', isRight: false },
-      { text: 'hi', isRight: true },
-      { text: 'whatsup', isRight: false },
-      { text: 'not much, wbu', isRight: true },
-      { text: 'lol', isRight: false },
-      { text: 'wtf????', isRight: true },
-      { text: 'u funni', isRight: false },
-      { text: 'u singl?', isRight: true },
-      { text: 'no sry', isRight: false },
-      { text: 'ohh', isRight: true },
-      { text: 'hi', isRight: false },
-      { text: 'bye', isRight: true },
-      { text: 'cya', isRight: false }
-     ]
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = { chats: [] };
+  }
+
+  // Need to update chats upon language switch
+  componentWillReceiveProps(nextProps) {
+    const newChats = nextProps.chats;
+
+    // Configure chats to be displayed properly
+    const chats = newChats.map(chat => {
+      if (chat.isSentFromPrimary) {
+        return { text: chat.text, isRight: false };
+      }
+      return { text: chat.text, isRight: true };
+    });
+
+    // Update state
+    this.setState({ chats });
+  }
 
   renderChatBoxes() {
     // Best to use the id from a database as a key but we have no choice here,

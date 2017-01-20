@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
+import HttpClient from '../http_client';
+
 
 class LanguagePicker extends Component {
 
   constructor(props) {
     super(props);
-    this.languages = ['english', 'spanish', 'japanese', 'french'];
+    const defaultLanguages = ['English', 'Spanish', 'Japanese', 'French'];
     this.selectionHandler = props.handler;
-    this.state = { currentLanguage: props.currentLanguage };
+    this.state = { currentLanguage: props.currentLanguage, languages: defaultLanguages };
+
+    HttpClient.fetchLanguagesAsync((languages, err) => {
+      if (!err) {
+        // Update the state with the newly fetched languages
+        this.setState({ languages });
+      } else {
+        console.log('Error fetching languages');
+        console.log(err);
+      }
+    });
   }
 
   // Need to update selected language based on which user is active
@@ -36,7 +48,7 @@ class LanguagePicker extends Component {
               value={this.state.currentLanguage}
               onChange={this.selectionMade.bind(this)}
             >
-              {this.languages.map(this.makeOptionElement)}
+              {this.state.languages.map(this.makeOptionElement)}
             </select>
           </span>
         </p>

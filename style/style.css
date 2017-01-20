@@ -33,8 +33,6 @@
 }
 
 .chat-area {
-  /*border: 1px solid #b5b5b5;*/
-  /*border-radius: 1%;*/
   height: 10vh;
   width: 50vw;
 }
@@ -103,5 +101,12 @@ and (max-device-width : 480px) {
   .chat-box {
     width: 90vw;
   }
+  .chat-area {
+    width: 90vw;
+  }
 
+  .interaction-view-button {
+      width: 17vw;
+      height: 17vw;
+    }
 }

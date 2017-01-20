@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-
-
-// class StartButton extends Component {
+import React from 'react';
 
 const StartButton = ({ onTap }) => {
   // ^ Destructuring onTap prop function attribute from props object.

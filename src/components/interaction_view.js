@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import LanguagePicker from './language_picker';
-import InteractionDataSource from '../models/interaction_datasource';
 import ChatBox from './chat_box';
-import ChatArea from './chat_area'
+import ChatArea from './chat_area';
+import HttpClient from '../http_client';
+import LanguagePicker from './language_picker';
 import InteractionViewButton from './interaction_view_button';
+import InteractionDataSource from '../models/interaction_datasource';
 
 class InteractionView extends Component {
 
@@ -20,18 +21,56 @@ class InteractionView extends Component {
     this.currentTypedText = '';
   }
 
-  switchUsers() {
-    // Swap states to other user
-    const currentState = this.state.primaryUserActive;
-    this.setState({ primaryUserActive: !currentState });
-
-    // TODO: Make Translate API Call
+  doTranslation() {
+    // Get the who is currently active (primary or secondary)
+    const primaryActive = this.state.primaryUserActive;
     console.log(`Switching users\nText to translate: ${this.currentTypedText}`);
+    this.translateText(this.currentTypedText, primaryActive);
 
     // Reset current typed text
     this.currentTypedText = '';
+  }
 
-    // TODO: Switch history of chats
+  // Called ONLY after a translation finishes
+  switchUsers() {
+    // Get the who is currently active (primary or secondary)
+    const primaryActive = this.state.primaryUserActive;
+
+    // Swap states to other user only after translation API call finishes
+    this.setState({ primaryUserActive: !primaryActive });
+  }
+
+  translateText(text, isPrimaryActive) {
+    // Get current languages
+    let from = this.interactionDataSource.primaryUserLanguage;
+    let to = this.interactionDataSource.secondaryUserLanguage;
+
+    // if secondary is active, swap em.
+    if (!isPrimaryActive) {
+        from = this.interactionDataSource.secondaryUserLanguage;
+        to = this.interactionDataSource.primaryUserLanguage;
+    }
+
+    // Make translation request
+    HttpClient.translate(text, from, to, (translation, err) => {
+      if (!err) {
+        console.log('Made translation');
+        console.log(`${text} == ${translation}`);
+
+        // Update the data source with this new information
+        if (isPrimaryActive) {
+          this.interactionDataSource.primaryUserDidSendMessage(text, translation);
+        } else {
+          this.interactionDataSource.secondaryUserDidSendMessage(text, translation);
+        }
+
+        // Swap users
+        this.switchUsers();
+      } else {
+        console.log('Error making translation');
+        console.log(err);
+      }
+    });
   }
 
   completeInteraction() {
@@ -57,15 +96,16 @@ class InteractionView extends Component {
     this.currentTypedText = text;
   }
 
-
   render() {
     // Get the current active language
-    let currentUserLanguage;
-    if (this.state.primaryUserActive) {
-      currentUserLanguage = this.interactionDataSource.primaryUserLanguage;
-    } else {
+    // Aswell as the chats for the correct perspective
+    let currentUserLanguage = this.interactionDataSource.primaryUserLanguage;
+    let chats = this.interactionDataSource.primaryUsersMessages;
+    if (!this.state.primaryUserActive) {
       currentUserLanguage = this.interactionDataSource.secondaryUserLanguage;
+      chats = this.interactionDataSource.secondaryUsersMessages;
     }
+
     console.log(`The current users language is: ${currentUserLanguage}`);
 
     // The ChatArea Component receives the current value of typed text
@@ -77,10 +117,10 @@ class InteractionView extends Component {
           currentLanguage={currentUserLanguage}
           handler={this.pickLanguage.bind(this)}
         />
-        <ChatBox />
+        <ChatBox chats={chats} />
         <ChatArea handler={this.textHasBeenTyped.bind(this)} text={this.currentTypedText} />
         <InteractionViewButton
-          onTap={this.switchUsers.bind(this)}
+          onTap={this.doTranslation.bind(this)}
           color='yellow'
           icon='fa-arrow-circle-o-right'
         />
